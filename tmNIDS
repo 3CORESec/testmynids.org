@@ -1,0 +1,209 @@
+#!/bin/bash
+
+##############################
+##   Define all the tests    #
+##############################
+
+# Let's start naming them
+
+test_uid_name="Linux UID"
+test_basicauth_name="HTTP Basic Authentication"
+test_useragent_name="HTTP Malware User-Agent"
+test_badcas_name="Bad Certificate Authorities"
+test_tor_name="Tor .onion DNS response and known IPs connection"
+test_exe_name="EXE or DLL download over HTTP"
+test_pdf_name="PDF download with Embedded File"
+test_22scan_name="Simulate SSH Outbound Scan"
+test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
+test_md5rsa_name="MD5 in TLS Certificate Signature"
+
+# Define the actual test 
+
+test_uid () {
+  curl -s http://testmynids.org/uid/index.html > /dev/null
+}
+
+test_basicauth () {
+  curl -s -H "Authorization: Basic cm9vdDpyb290" testmynids.org > /dev/null
+}
+
+test_useragent () {
+  curl -s -A "BlackSun" testmynids.org > /dev/null
+  curl -s -A "HttpDownload" testmynids.org > /dev/null
+  curl -s -A "agent" testmynids.org > /dev/null
+  curl -s -A "MSIE" testmynids.org > /dev/null
+  curl -s -A "JEDI-VCL" testmynids.org > /dev/null
+}
+
+test_badcas () {
+  curl -s https://edellroot.badssl.com/ > /dev/null
+  curl -s https://superfish.badssl.com/ > /dev/null
+}
+
+test_tor () {
+  # Sample response with .onion
+  dig a 3wzn5p2yiumh7akj.onion @8.8.8.8 > /dev/null
+
+  # Retrieve Tor IP list and connect to 10
+  curl -s https://raw.githubusercontent.com/SecOps-Institute/Tor-IP-Addresses/master/tor-nodes.lst -o /tmp/tor.list >/dev/null 2>&1
+  # Randomize it
+  sort --random-sort /tmp/tor.list > /tmp/randomtor.list
+  # Connect to them
+  head -n10 /tmp/randomtor.list | while read line; do nc -z -w 4 $line 443 2>&1; done
+  # Clean temporary files
+  rm /tmp/tor.list
+  rm /tmp/randomtor.list
+}
+
+test_exe () {
+  curl -s http://testmynids.org/exe/calc.exe -o /tmp/calc.exe
+}
+
+test_pdf () {
+  curl -s testmynids.org/pdf/pdf.pdf -o /tmp/tmnidspdf.pdf 
+  rm /tmp/tmnidspdf.pdf
+}
+
+test_22scan () {
+  nc testmynids.org 22 -w3 > /dev/null
+}
+
+test_miscdns () {
+  dig sinkhole.cert.pl @8.8.8.8 > /dev/null
+  dig nic.su @8.8.8.8 > /dev/null
+  dig invalid.no-ip.com @8.8.8.8 > /dev/null
+}
+
+test_md5rsa () {
+  # This test is made possible by Barracuda, as they still believe MD5 in certificates is OK
+  for ip in 64.235.158.{25..30}
+    do
+      echo Q | openssl s_client -connect ${ip}:443 -tls1 > /dev/null 2>&1
+    done
+}
+
+##############################
+#     Interactive Mode       #
+##############################
+
+# No arguments assumes interactive mode
+if [ -z "$*" ]; then
+
+while true; do
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_md5rsa_name" "CHAOS! RUN ALL!" "Quit!")
+
+  clear
+
+  echo " _             _   _ _____ _____   _____ "
+  echo "| |           | \ | |_   _|  __ \ / ____|"
+  echo "| |_ _ __ ___ |  \| | | | | |  | | (___  "
+  echo "| __|  _   _ \| .   | | | | |  | |\___ \ "
+  echo "| |_| | | | | | |\  |_| |_| |__| |____) |"
+  echo " \__|_| |_| |_|_| \_|_____|_____/|_____/ "
+
+  echo ""
+  echo "tmNIDS - NIDS detection tester - @0xtf"
+  echo "Project: https://github.com/0xtf/testmynids.org"
+  echo ""
+  echo "Choose which test you'd like to run: "
+  echo ""
+  select opt in "${options[@]}"; do
+    case $REPLY in
+      1) test_uid; break ;;
+      2) test_basicauth; break ;;
+      3) test_useragent; break ;;
+      4) test_badcas; break ;;
+      5) test_tor; break ;;
+      6) test_exe; break ;;
+      7) test_pdf; break ;;
+      8) test_22scan; break ;;
+      9) test_miscdns; break ;;
+      10) test_md5rsa; break ;;
+      11) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_md5rsa; break ;;
+      12) break 12 ;;
+    *) echo "Invalid option!" >&2
+  esac
+  done
+done
+# below comes from if argument
+fi
+
+##############################
+#        Script Mode         #
+##############################
+
+for arg in "$@"
+do
+  if [ "$arg" == "--list" ] || [ "$arg" == "-l" ] || [ "$arg" == "--help" ] || [ "$arg" == "-h" ]
+  then
+    echo -e "\nThese are the available tests:\n\n \
+      - $test_uid_name (run with -1)\n \
+      - $test_basicauth_name (run with -2)\n \
+      - $test_useragent_name (run with -3)\n \
+      - $test_badcas_name (run with -4)\n \
+      - $test_tor_name (run with -5)\n \
+      - $test_exe_name (run with -6)\n \
+      - $test_pdf_name (run with -7)\n \
+      - $test_22scan_name (run with -8)\n \
+      - $test_miscdns_name (run with -9)\n \
+      - $test_md5rsa_name (run with -10)\n \
+      - CHAOS! Run all! (run with -99)\n"
+    echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
+  fi
+
+  if [ "$arg" == "-1" ] 
+  then
+    test_uid  
+  fi
+
+  if [ "$arg" == "-2" ]
+  then
+    test_basicauth
+  fi
+
+  if [ "$arg" == "-3" ]
+  then
+    test_useragent
+  fi
+
+  if [ "$arg" == "-4" ] 
+  then
+    test_badcas
+  fi
+
+  if [ "$arg" == "-5" ]
+  then
+    test_tor
+  fi
+
+  if [ "$arg" == "-6" ]
+  then
+    test_exe
+  fi
+
+  if [ "$arg" == "-7" ]
+  then
+    test_pdf
+  fi
+
+  if [ "$arg" == "-8" ]
+  then
+    test_22scan
+  fi
+
+  if [ "$arg" == "-9" ]
+  then
+    test_miscdns
+  fi
+
+  if [ "$arg" == "-10" ]
+  then
+    test_md5rsa
+  fi
+
+  if [ "$arg" == "-99" ]
+  then
+    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_md5rsa;
+  fi
+
+done
