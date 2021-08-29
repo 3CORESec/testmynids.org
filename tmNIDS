@@ -102,8 +102,8 @@ while true; do
   echo " \__|_| |_| |_|_| \_|_____|_____/|_____/ "
 
   echo ""
-  echo "tmNIDS - NIDS detection tester - @0xtf"
-  echo "Project: https://github.com/0xtf/testmynids.org"
+  echo "tmNIDS - NIDS detection tester - @3CORESec"
+  echo "Project: https://github.com/3CORESec/testmynids.org"
   echo ""
   echo "Choose which test you'd like to run: "
   echo ""
