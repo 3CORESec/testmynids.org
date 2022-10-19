@@ -75,11 +75,7 @@ test_miscdns () {
 }
 
 test_md5rsa () {
-  # This test is made possible by Barracuda, as they still believe MD5 in certificates is OK
-  for ip in 64.235.158.{25..30}
-    do
-      echo Q | openssl s_client -connect ${ip}:443 -tls1 > /dev/null 2>&1
-    done
+  echo Q | openssl s_client -connect rc4-md5.badssl.com:443 -tls1 > /dev/null 2>&1
 }
 
 ##############################
