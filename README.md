@@ -33,7 +33,7 @@ To run tmNIDS in interactive mode without using the one-liner, download and run 
 
 After downloading **tmNIDS** make it executable *(chmod +x tmNIDS)* and run it *(./tmNIDS)* to be presented with the wizard:
 
-![image](./assets/imgs/screenshot.png)
+<img src="./assets/imgs/screenshot.png" width="404" height="412"/>
 
 ### Script mode
 
