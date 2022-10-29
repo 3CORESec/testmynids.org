@@ -15,7 +15,7 @@ test_exe_name="EXE or DLL download over HTTP"
 test_pdf_name="PDF download with Embedded File"
 test_22scan_name="Simulate SSH Outbound Scan"
 test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
-test_md5rsa_name="MD5 in TLS Certificate Signature"
+test_filesharing_name="Anonymous filesharing from TLS certificate"
 
 # Define the actual test 
 
@@ -74,8 +74,8 @@ test_miscdns () {
   dig invalid.no-ip.com @8.8.8.8 > /dev/null
 }
 
-test_md5rsa () {
-  echo Q | openssl s_client -connect rc4-md5.badssl.com:443 -tls1 > /dev/null 2>&1
+test_filesharing () {
+  echo Q | openssl s_client -connect fromsmash.com:443 > /dev/null 2>&1
 }
 
 ##############################
@@ -86,7 +86,7 @@ test_md5rsa () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_md5rsa_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -114,8 +114,8 @@ while true; do
       7) test_pdf; break ;;
       8) test_22scan; break ;;
       9) test_miscdns; break ;;
-      10) test_md5rsa; break ;;
-      11) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_md5rsa; break ;;
+      10) test_filesharing; break ;;
+      11) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; break ;;
       12) break 12 ;;
     *) echo "Invalid option!" >&2
   esac
@@ -142,7 +142,7 @@ do
       - $test_pdf_name (run with -7)\n \
       - $test_22scan_name (run with -8)\n \
       - $test_miscdns_name (run with -9)\n \
-      - $test_md5rsa_name (run with -10)\n \
+      - $test_filesharing_name (run with -10)\n \
       - CHAOS! Run all! (run with -99)\n"
     echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
   fi
@@ -194,12 +194,12 @@ do
 
   if [ "$arg" == "-10" ]
   then
-    test_md5rsa
+    test_filesharing
   fi
 
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_md5rsa;
+    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing;
   fi
 
 done
