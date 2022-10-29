@@ -15,7 +15,7 @@ test_exe_name="EXE or DLL download over HTTP"
 test_pdf_name="PDF download with Embedded File"
 test_22scan_name="Simulate SSH Outbound Scan"
 test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
-test_filesharing_name="Anonymous filesharing from TLS certificate"
+test_filesharing_name="Anonymous filesharing website"
 
 # Define the actual test 
 
