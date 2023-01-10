@@ -76,6 +76,6 @@ Choose whatever works best for you.
 
 Found this interesting? Have a question/comment/request? Let us know!
 
-Feel free to open an [issue](https://github.com/3CORESec/testmynids.org/issues) or ping us on [Twitter](https://twitter.com/3CORESec). We also have a [Community Slack](https://launchpass.com/3coresec) where you can discuss our open-source projects, participate in giveaways and have access to projects before they are released to the public.
+Feel free to open an [issue](https://github.com/3CORESec/testmynids.org/issues) or ping us on [Twitter](https://twitter.com/3CORESec). 
 
 [![Twitter](https://img.shields.io/twitter/follow/3CORESec.svg?style=social&label=Follow)](https://twitter.com/3CORESec)
