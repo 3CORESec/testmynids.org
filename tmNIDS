@@ -38,6 +38,11 @@ test_useragent () {
 test_badcas () {
   curl -s https://edellroot.badssl.com/ > /dev/null
   curl -s https://superfish.badssl.com/ > /dev/null
+  curl -s https://livehost.live/ > /dev/null
+  curl -s https://analiticsweb.site/ > /dev/null
+  curl -s https://adguard.clroot.io/ > /dev/null
+  curl -s https://cryptpad.disroot.org/ > /dev/null
+  curl -s https://beetrootculture.com/ > /dev/null
 }
 
 test_tor () {
