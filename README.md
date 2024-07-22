@@ -57,6 +57,8 @@ In summary, the usage of `./tmNIDS -N`, where N is the number of the test, will 
 |    8    | Simulate an outbound SSH scan                                     | SSH            |
 |    9    | Miscellaneous *(TLD's, Sinkhole, DDNS, etc)* domains              | DNS            |
 |   10    | Anonymous filesharing website                                     | DNS & TLS      |
+|   11    | External IP Address Lookup website | HTTP, DNS & TLS      |
+|   12    | URL Shortener | HTTP, DNS & TLS      |
 |   99    | CHAOS! Run all tests!                                             | ☝️ ALL         |
 
 ## Why? What about _insert_project\_here_?
