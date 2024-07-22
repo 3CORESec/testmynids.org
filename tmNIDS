@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ##############################
-##   Define all the tests    #
+##   Define all the tests    ##
 ##############################
 
 # Let's start naming them
@@ -16,8 +16,9 @@ test_pdf_name="PDF download with Embedded File"
 test_22scan_name="Simulate SSH Outbound Scan"
 test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
 test_filesharing_name="Anonymous filesharing website"
+test_external_ip_lookup_name="External IP Address Lookup"
 
-# Define the actual test 
+# Define the actual tests
 
 test_uid () {
   curl -s http://testmynids.org/uid/index.html > /dev/null
@@ -83,6 +84,18 @@ test_filesharing () {
   echo Q | openssl s_client -connect fromsmash.com:443 > /dev/null 2>&1
 }
 
+test_external_ip_lookup () {
+  curl -s https://icanhazip.com/ > /dev/null
+  curl -s https://ipinfo.io/ > /dev/null
+  curl -s https://whoer.net/ > /dev/null
+  curl -s https://ipecho.net/ > /dev/null
+  curl -s https://whatismyip.akamai.com/ > /dev/null
+  curl -s https://ifconfig.io/ > /dev/null
+  curl -s https://ifconfig.co/ > /dev/null
+  curl -s https://checkip.amazonaws.com/ > /dev/null
+  curl -s https://ip-api.com/ > /dev/null
+}
+
 ##############################
 #     Interactive Mode       #
 ##############################
@@ -91,7 +104,7 @@ test_filesharing () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -120,8 +133,9 @@ while true; do
       8) test_22scan; break ;;
       9) test_miscdns; break ;;
       10) test_filesharing; break ;;
-      11) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; break ;;
-      12) break 12 ;;
+      11) test_external_ip_lookup; break ;;
+      12) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; break ;;
+      13) break 13 ;;
     *) echo "Invalid option!" >&2
   esac
   done
@@ -148,6 +162,7 @@ do
       - $test_22scan_name (run with -8)\n \
       - $test_miscdns_name (run with -9)\n \
       - $test_filesharing_name (run with -10)\n \
+      - $test_external_ip_lookup_name (run with -11)\n \
       - CHAOS! Run all! (run with -99)\n"
     echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
   fi
@@ -202,9 +217,14 @@ do
     test_filesharing
   fi
 
+  if [ "$arg" == "-11" ]
+  then
+    test_external_ip_lookup
+  fi
+
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing;
+    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup;
   fi
 
 done
