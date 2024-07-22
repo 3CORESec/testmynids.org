@@ -1,8 +1,8 @@
 #!/bin/bash
 
-##############################
-##   Define all the tests    ##
-##############################
+#############################
+#   Define all the tests    #
+#############################
 
 # Let's start naming them
 
@@ -18,6 +18,7 @@ test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
 test_filesharing_name="Anonymous filesharing website"
 test_external_ip_lookup_name="External IP Address Lookup"
 test_url_shortener_name="URL Shortener"
+test_gaming_name="Policy Violation - Gaming"
 
 # Define the actual tests
 
@@ -104,6 +105,11 @@ test_url_shortener () {
   curl -s https://iplog.co/ > /dev/null
 }
 
+test_gaming () {
+  curl -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null
+  curl http://example.com/Second_Life_Setup.exe > /dev/null
+}
+
 ##############################
 #     Interactive Mode       #
 ##############################
@@ -112,7 +118,7 @@ test_url_shortener () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -143,8 +149,9 @@ while true; do
       10) test_filesharing; break ;;
       11) test_external_ip_lookup; break ;;
       12) test_url_shortener; break ;;
-      13) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; break ;;
-      14) break 14 ;;
+      13) test_gaming; break ;;
+      14) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; break ;;
+      15) break 15 ;;
     *) echo "Invalid option!" >&2
   esac
   done
@@ -173,6 +180,7 @@ do
       - $test_filesharing_name (run with -10)\n \
       - $test_external_ip_lookup_name (run with -11)\n \
       - $test_url_shortener_name (run with -12)\n \
+      - $test_gaming_name (run with -13)\n \
       - CHAOS! Run all! (run with -99)\n"
     echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
   fi
@@ -237,9 +245,14 @@ do
     test_url_shortener
   fi
 
+  if [ "$arg" == "-13" ]
+  then
+    test_gaming
+  fi
+
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener;
+    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming;
   fi
 
 done
