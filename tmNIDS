@@ -39,8 +39,6 @@ test_useragent () {
 }
 
 test_badcas () {
-  curl -s https://edellroot.badssl.com/ > /dev/null
-  curl -s https://superfish.badssl.com/ > /dev/null
   curl -s https://livehost.live/ > /dev/null
   curl -s https://analiticsweb.site/ > /dev/null
   curl -s https://adguard.clroot.io/ > /dev/null
