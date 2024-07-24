@@ -87,16 +87,12 @@ test_filesharing () {
 }
 
 test_external_ip_lookup () {
-  curl -s https://icanhazip.com/ > /dev/null
-  curl -s https://ipinfo.io/ > /dev/null
-  curl -s https://whoer.net/ > /dev/null
-  curl -s https://ipecho.net/ > /dev/null
-  curl -s https://whatismyip.akamai.com/ > /dev/null
-  curl -s https://ifconfig.io/ > /dev/null
-  curl -s https://ifconfig.co/ > /dev/null
-  curl -s https://checkip.amazonaws.com/ > /dev/null
-  curl -s https://ip-api.com/ > /dev/null
-  curl -s https://iplogger.com/ > /dev/null # sid: 2827133
+  curl -s api.ipify.org > /dev/null # sid: 2021997, 2047702, 2047703
+  curl -s ipinfo.io > /dev/null # sid: 2020716, 2025331
+  curl -s icanhazip.com > /dev/null # sid: 2036304
+  curl -s ifconfig.io > /dev/null # sid: 2844906
+  curl -s checkip.amazonaws.com > /dev/null # sid: 2814787
+  curl -s ip-api.com > /dev/null # sid: 2022082
 }
 
 test_url_shortener () {
