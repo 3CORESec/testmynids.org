@@ -96,18 +96,18 @@ test_external_ip_lookup () {
   curl -s https://ifconfig.co/ > /dev/null
   curl -s https://checkip.amazonaws.com/ > /dev/null
   curl -s https://ip-api.com/ > /dev/null
+  curl -s https://iplogger.com/ > /dev/null # sid: 2827133
 }
 
 test_url_shortener () {
-  curl -s https://lnkz.at/ > /dev/null
-  curl -s https://bit.ly/ > /dev/null
-  curl -s https://trimmer.to/ > /dev/null
-  curl -s https://iplog.co/ > /dev/null
+  curl -s zshorten.com > /dev/null # sid: 2038992
+  curl -s cutt.ly > /dev/null # sid: 2038568
+  curl -s lk.tc > /dev/null # sid: 2035742
 }
 
 test_gaming () {
-  curl -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null
-  curl http://example.com/Second_Life_Setup.exe > /dev/null
+  curl -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null # sid: 2014718
+  curl http://example.com/Second_Life_Setup.exe > /dev/null #sid: 2013910
 }
 
 ##############################
