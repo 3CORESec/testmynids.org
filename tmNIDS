@@ -89,9 +89,9 @@ test_filesharing () {
 test_external_ip_lookup () {
   curl -s api.ipify.org > /dev/null # sid: 2021997, 2047702, 2047703
   curl -s ipinfo.io > /dev/null # sid: 2020716, 2025331
-  curl -s icanhazip.com > /dev/null # sid: 2036304
+  curl -s icanhazip.com > /dev/null # sid: 2036304, 2017398
   curl -s ifconfig.io > /dev/null # sid: 2844906
-  curl -s checkip.amazonaws.com > /dev/null # sid: 2814787
+  curl -s checkip.amazonaws.com > /dev/null # sid: 2052027, 2814787
   curl -s ip-api.com > /dev/null # sid: 2022082
 }
 
