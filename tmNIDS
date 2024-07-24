@@ -1,8 +1,8 @@
 #!/bin/bash
 
-##############################
-##   Define all the tests    #
-##############################
+#############################
+#   Define all the tests    #
+#############################
 
 # Let's start naming them
 
@@ -16,8 +16,11 @@ test_pdf_name="PDF download with Embedded File"
 test_22scan_name="Simulate SSH Outbound Scan"
 test_miscdns_name="Miscellaneous domains (TLD's, Sinkhole, DDNS, etc)"
 test_filesharing_name="Anonymous filesharing website"
+test_external_ip_lookup_name="External IP Address Lookup"
+test_url_shortener_name="URL Shortener"
+test_gaming_name="Policy Violation - Gaming"
 
-# Define the actual test 
+# Define the actual tests
 
 test_uid () {
   curl -s http://testmynids.org/uid/index.html > /dev/null
@@ -38,6 +41,11 @@ test_useragent () {
 test_badcas () {
   curl -s https://edellroot.badssl.com/ > /dev/null
   curl -s https://superfish.badssl.com/ > /dev/null
+  curl -s https://livehost.live/ > /dev/null
+  curl -s https://analiticsweb.site/ > /dev/null
+  curl -s https://adguard.clroot.io/ > /dev/null
+  curl -s https://cryptpad.disroot.org/ > /dev/null
+  curl -s https://beetrootculture.com/ > /dev/null
 }
 
 test_tor () {
@@ -78,6 +86,26 @@ test_filesharing () {
   echo Q | openssl s_client -connect fromsmash.com:443 > /dev/null 2>&1
 }
 
+test_external_ip_lookup () {
+  curl -s api.ipify.org > /dev/null # sid: 2021997, 2047702, 2047703
+  curl -s ipinfo.io > /dev/null # sid: 2020716, 2025331
+  curl -s icanhazip.com > /dev/null # sid: 2036304, 2017398
+  curl -s ifconfig.io > /dev/null # sid: 2844906
+  curl -s checkip.amazonaws.com > /dev/null # sid: 2052027, 2814787
+  curl -s ip-api.com > /dev/null # sid: 2022082
+}
+
+test_url_shortener () {
+  curl -s zshorten.com > /dev/null # sid: 2038992
+  curl -s cutt.ly > /dev/null # sid: 2038568
+  curl -s lk.tc > /dev/null # sid: 2035742
+}
+
+test_gaming () {
+  curl -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null # sid: 2014718
+  curl http://example.com/Second_Life_Setup.exe > /dev/null #sid: 2013910
+}
+
 ##############################
 #     Interactive Mode       #
 ##############################
@@ -86,7 +114,7 @@ test_filesharing () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -115,8 +143,11 @@ while true; do
       8) test_22scan; break ;;
       9) test_miscdns; break ;;
       10) test_filesharing; break ;;
-      11) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; break ;;
-      12) break 12 ;;
+      11) test_external_ip_lookup; break ;;
+      12) test_url_shortener; break ;;
+      13) test_gaming; break ;;
+      14) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; break ;;
+      15) break 15 ;;
     *) echo "Invalid option!" >&2
   esac
   done
@@ -143,6 +174,9 @@ do
       - $test_22scan_name (run with -8)\n \
       - $test_miscdns_name (run with -9)\n \
       - $test_filesharing_name (run with -10)\n \
+      - $test_external_ip_lookup_name (run with -11)\n \
+      - $test_url_shortener_name (run with -12)\n \
+      - $test_gaming_name (run with -13)\n \
       - CHAOS! Run all! (run with -99)\n"
     echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
   fi
@@ -197,9 +231,24 @@ do
     test_filesharing
   fi
 
+  if [ "$arg" == "-11" ]
+  then
+    test_external_ip_lookup
+  fi
+
+  if [ "$arg" == "-12" ]
+  then
+    test_url_shortener
+  fi
+
+  if [ "$arg" == "-13" ]
+  then
+    test_gaming
+  fi
+
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing;
+    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming;
   fi
 
 done
