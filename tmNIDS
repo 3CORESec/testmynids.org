@@ -39,13 +39,17 @@ test_useragent () {
 }
 
 test_badcas () {
-  curl -s https://edellroot.badssl.com/ > /dev/null
-  curl -s https://superfish.badssl.com/ > /dev/null
-  curl -s https://livehost.live/ > /dev/null
-  curl -s https://analiticsweb.site/ > /dev/null
-  curl -s https://adguard.clroot.io/ > /dev/null
-  curl -s https://cryptpad.disroot.org/ > /dev/null
-  curl -s https://beetrootculture.com/ > /dev/null
+  curl -s https://edellroot.badssl.com/ > /dev/null # sid: 2022134
+  curl -s https://superfish.badssl.com/ > /dev/null # sid: 2020493
+  echo Q | openssl s_client -showcerts -servername example.livehost.live -connect example.livehost.live:443 2>/dev/null # sid: 2029345, 2029346
+  echo Q | openssl s_client -showcerts -servername analiticsweb.site -connect analiticsweb.site:443 2>/dev/null # sid: 2033098
+  echo Q | openssl s_client -showcerts -servername adguard.clroot.io -connect adguard.clroot.io:443 2>/dev/null # sid: 2045597
+  echo Q | openssl s_client -showcerts -servername cryptpad.disroot.org -connect cryptpad.disroot.org:443 2>/dev/null # sid: 2053979
+  echo Q | openssl s_client -showcerts -servername beetrootculture.com -connect beetrootculture.com:443 2>/dev/null # sid: 2054198, 2054200
+  curl -s https://analiticsweb.site/ > /dev/null # sid: 2033098
+  curl -s https://adguard.clroot.io/ > /dev/null # sid: 2045597
+  curl -s https://cryptpad.disroot.org/ > /dev/null # sid: 2053979
+  curl -s https://beetrootculture.com/ > /dev/null # sid: 2054198, 2054200
 }
 
 test_tor () {
