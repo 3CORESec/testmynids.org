@@ -102,8 +102,8 @@ test_url_shortener () {
 }
 
 test_gaming () {
-  curl -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null # sid: 2014718
-  curl http://example.com/Second_Life_Setup.exe > /dev/null #sid: 2013910
+  curl -s -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null # sid: 2014718
+  curl -s http://example.com/Second_Life_Setup.exe > /dev/null #sid: 2013910
 }
 
 ##############################
