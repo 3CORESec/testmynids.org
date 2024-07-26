@@ -9,7 +9,7 @@
 test_uid_name="Linux UID"
 test_basicauth_name="HTTP Basic Authentication"
 test_useragent_name="HTTP Malware User-Agent"
-test_badcas_name="Bad Certificate Authorities"
+test_badcas_name="Bad Certificates & CAs"
 test_tor_name="Tor .onion DNS response and known IPs connection"
 test_exe_name="EXE or DLL download over HTTP"
 test_pdf_name="PDF download with Embedded File"
@@ -41,11 +41,11 @@ test_useragent () {
 test_badcas () {
   curl -s https://edellroot.badssl.com/ > /dev/null # sid: 2022134
   curl -s https://superfish.badssl.com/ > /dev/null # sid: 2020493
-  echo Q | openssl s_client -showcerts -servername example.livehost.live -connect example.livehost.live:443 2>/dev/null # sid: 2029345, 2029346
-  echo Q | openssl s_client -showcerts -servername analiticsweb.site -connect analiticsweb.site:443 2>/dev/null # sid: 2033098
-  echo Q | openssl s_client -showcerts -servername adguard.clroot.io -connect adguard.clroot.io:443 2>/dev/null # sid: 2045597
-  echo Q | openssl s_client -showcerts -servername cryptpad.disroot.org -connect cryptpad.disroot.org:443 2>/dev/null # sid: 2053979
-  echo Q | openssl s_client -showcerts -servername beetrootculture.com -connect beetrootculture.com:443 2>/dev/null # sid: 2054198, 2054200
+  echo Q | openssl s_client -showcerts -servername example.livehost.live -connect example.livehost.live:443 > /dev/null 2>&1 # sid: 2029345, 2029346
+  echo Q | openssl s_client -showcerts -servername analiticsweb.site -connect analiticsweb.site:443 > /dev/null 2>&1 # sid: 2033098
+  echo Q | openssl s_client -showcerts -servername adguard.clroot.io -connect adguard.clroot.io:443 > /dev/null 2>&1 # sid: 2045597
+  echo Q | openssl s_client -showcerts -servername cryptpad.disroot.org -connect cryptpad.disroot.org:443 > /dev/null 2>&1 # sid: 2053979
+  echo Q | openssl s_client -showcerts -servername beetrootculture.com -connect beetrootculture.com:443 > /dev/null 2>&1 # sid: 2054198, 2054200
   curl -s https://analiticsweb.site/ > /dev/null # sid: 2033098
   curl -s https://adguard.clroot.io/ > /dev/null # sid: 2045597
   curl -s https://cryptpad.disroot.org/ > /dev/null # sid: 2053979
