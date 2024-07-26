@@ -19,6 +19,8 @@ test_filesharing_name="Anonymous filesharing website"
 test_external_ip_lookup_name="External IP Address Lookup"
 test_url_shortener_name="URL Shortener"
 test_gaming_name="Policy Violation - Gaming"
+test_adware_pup_name="Adware PUP"
+test_malware_c2_beacon_name="Malware - Command & Control - Beacon"
 
 # Define the actual tests
 
@@ -50,6 +52,7 @@ test_badcas_certs () {
   curl -s https://adguard.clroot.io/ > /dev/null # sid: 2045597
   curl -s https://cryptpad.disroot.org/ > /dev/null # sid: 2053979
   curl -s https://beetrootculture.com/ > /dev/null # sid: 2054198, 2054200
+  curl -s testmynids.org/content_for_tests/2021941.txt > /dev/null # sid: 2021941
 }
 
 test_tor () {
@@ -106,9 +109,21 @@ test_url_shortener () {
 }
 
 test_gaming () {
-  curl -s -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" http://example.com > /dev/null # sid: 2014718
-  curl -s http://example.com/Second_Life_Setup.exe > /dev/null #sid: 2013910
+  curl -s -H "User-Agent: (Nintendo Wii; U; ; 2047-12; en)" testmynids.org > /dev/null # sid: 2014718
+  curl -s testmynids.org/Second_Life_Setup.exe > /dev/null #sid: 2013910
 }
+
+test_adware_pup () {
+  curl -s testmynids.org/php/rpc_uci.php > /dev/null # sid: 2003060
+  curl -s "testmynids.org/keywords/kyf?partner_id=123" > /dev/null # sid: 2002001
+  curl -s testmynids.org/protector.exe > /dev/null # sid: 2002092
+}
+
+test_malware_c2_beacon () {
+   curl -s -X POST testmynids.org -H 'Content-Type: application/txt' -d '=eyJHVUlEIjoi=IlR5cGUiOJUeXBlIj' > /dev/null # sid: 2027793
+   curl -s testmynids.org/somepage.html?1234567890 -H 'User-Agent: sleep 20, Mozilla/5.0' > /dev/null # sid: 2016568
+}
+
 
 ##############################
 #     Interactive Mode       #
@@ -118,7 +133,7 @@ test_gaming () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_certs_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_certs_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "$test_adware_pup_name" "$test_malware_c2_beacon_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -150,14 +165,17 @@ while true; do
       11) test_external_ip_lookup; break ;;
       12) test_url_shortener; break ;;
       13) test_gaming; break ;;
-      14) test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; break ;;
-      15) break 15 ;;
+      14) test_adware_pup; break ;;
+      15) test_malware_c2_beacon; break ;;
+      16) test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; test_adware_pup; test_malware_c2_beacon; break ;;
+      17) break 17 ;;
     *) echo "Invalid option!" >&2
   esac
   done
 done
 # below comes from if argument
 fi
+
 
 ##############################
 #        Script Mode         #
@@ -181,6 +199,8 @@ do
       - $test_external_ip_lookup_name (run with -11)\n \
       - $test_url_shortener_name (run with -12)\n \
       - $test_gaming_name (run with -13)\n \
+      - $test_adware_pup_name (run with -14)\n \
+      - $test_malware_c2_beacon_name (run with -15)\n \
       - CHAOS! Run all! (run with -99)\n"
     echo -e "Example (runs Test 7 - PDF download with Embedded File): ./tmnids -7\n"
   fi
@@ -250,9 +270,19 @@ do
     test_gaming
   fi
 
+  if [ "$arg" == "-14" ]
+  then
+    test_adware_pup
+  fi
+
+  if [ "$arg" == "-15" ]
+  then
+    test_malware_c2_beacon
+  fi
+
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming;
+    test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; test_adware_pup; test_malware_c2_beacon;
   fi
 
 done
