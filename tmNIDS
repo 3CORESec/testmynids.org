@@ -51,6 +51,7 @@ test_badcas_certs () {
   curl -s https://adguard.clroot.io/ > /dev/null # sid: 2045597
   curl -s https://cryptpad.disroot.org/ > /dev/null # sid: 2053979
   curl -s https://beetrootculture.com/ > /dev/null # sid: 2054198, 2054200
+  curl -s testmynids.org/content_for_tests/2021941.txt > /dev/null # sid: 2021941
 }
 
 test_tor () {
@@ -167,6 +168,7 @@ while true; do
 done
 # below comes from if argument
 fi
+
 
 ##############################
 #        Script Mode         #

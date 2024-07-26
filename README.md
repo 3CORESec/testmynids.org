@@ -50,7 +50,7 @@ In summary, the usage of `./tmNIDS -N`, where N is the number of the test, will 
 |    1    | Linux UID                                                         | HTTP           |
 |    2    | Basic Authentication over clear text                              | HTTP           |
 |    3    | Several known malware-related user agents                         | HTTP           |
-|    4    | Known bad CA's & Certificates                                                   | TLS & DNS            |
+|    4    | Known bad CA's & Certificates                                                   | TLS, DNS & TCP            |
 |    5    | Tor .onion response and random Tor nodes connection               | DNS & TLS      |
 |    6    | EXE download over HTTP *(from AWS S3)* & Packed Executable        | HTTP           |
 |    7    | PDF download over HTTP with Embedded File                         | HTTP           |
