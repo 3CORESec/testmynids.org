@@ -9,7 +9,7 @@
 test_uid_name="Linux UID"
 test_basicauth_name="HTTP Basic Authentication"
 test_useragent_name="HTTP Malware User-Agent"
-test_badcas_name="Bad Certificate Authorities"
+test_badcas_certs_name="Bad Certificates & CAs"
 test_tor_name="Tor .onion DNS response and known IPs connection"
 test_exe_name="EXE or DLL download over HTTP"
 test_pdf_name="PDF download with Embedded File"
@@ -38,14 +38,14 @@ test_useragent () {
   curl -s -A "JEDI-VCL" testmynids.org > /dev/null
 }
 
-test_badcas () {
+test_badcas_certs () {
   curl -s https://edellroot.badssl.com/ > /dev/null # sid: 2022134
   curl -s https://superfish.badssl.com/ > /dev/null # sid: 2020493
-  echo Q | openssl s_client -showcerts -servername example.livehost.live -connect example.livehost.live:443 2>/dev/null # sid: 2029345, 2029346
-  echo Q | openssl s_client -showcerts -servername analiticsweb.site -connect analiticsweb.site:443 2>/dev/null # sid: 2033098
-  echo Q | openssl s_client -showcerts -servername adguard.clroot.io -connect adguard.clroot.io:443 2>/dev/null # sid: 2045597
-  echo Q | openssl s_client -showcerts -servername cryptpad.disroot.org -connect cryptpad.disroot.org:443 2>/dev/null # sid: 2053979
-  echo Q | openssl s_client -showcerts -servername beetrootculture.com -connect beetrootculture.com:443 2>/dev/null # sid: 2054198, 2054200
+  echo Q | openssl s_client -showcerts -servername example.livehost.live -connect example.livehost.live:443 > /dev/null 2>&1 # sid: 2029345, 2029346
+  echo Q | openssl s_client -showcerts -servername analiticsweb.site -connect analiticsweb.site:443 > /dev/null 2>&1 # sid: 2033098
+  echo Q | openssl s_client -showcerts -servername adguard.clroot.io -connect adguard.clroot.io:443 > /dev/null 2>&1 # sid: 2045597
+  echo Q | openssl s_client -showcerts -servername cryptpad.disroot.org -connect cryptpad.disroot.org:443 > /dev/null 2>&1 # sid: 2053979
+  echo Q | openssl s_client -showcerts -servername beetrootculture.com -connect beetrootculture.com:443 > /dev/null 2>&1 # sid: 2054198, 2054200
   curl -s https://analiticsweb.site/ > /dev/null # sid: 2033098
   curl -s https://adguard.clroot.io/ > /dev/null # sid: 2045597
   curl -s https://cryptpad.disroot.org/ > /dev/null # sid: 2053979
@@ -118,7 +118,7 @@ test_gaming () {
 if [ -z "$*" ]; then
 
 while true; do
-  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "CHAOS! RUN ALL!" "Quit!")
+  options=("$test_uid_name" "$test_basicauth_name" "$test_useragent_name" "$test_badcas_certs_name" "$test_tor_name" "$test_exe_name" "$test_pdf_name" "$test_22scan_name" "$test_miscdns_name" "$test_filesharing_name" "$test_external_ip_lookup_name" "$test_url_shortener_name" "$test_gaming_name" "CHAOS! RUN ALL!" "Quit!")
 
   clear
 
@@ -140,7 +140,7 @@ while true; do
       1) test_uid; break ;;
       2) test_basicauth; break ;;
       3) test_useragent; break ;;
-      4) test_badcas; break ;;
+      4) test_badcas_certs; break ;;
       5) test_tor; break ;;
       6) test_exe; break ;;
       7) test_pdf; break ;;
@@ -150,7 +150,7 @@ while true; do
       11) test_external_ip_lookup; break ;;
       12) test_url_shortener; break ;;
       13) test_gaming; break ;;
-      14) test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; break ;;
+      14) test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming; break ;;
       15) break 15 ;;
     *) echo "Invalid option!" >&2
   esac
@@ -171,7 +171,7 @@ do
       - $test_uid_name (run with -1)\n \
       - $test_basicauth_name (run with -2)\n \
       - $test_useragent_name (run with -3)\n \
-      - $test_badcas_name (run with -4)\n \
+      - $test_badcas_certs_name (run with -4)\n \
       - $test_tor_name (run with -5)\n \
       - $test_exe_name (run with -6)\n \
       - $test_pdf_name (run with -7)\n \
@@ -202,7 +202,7 @@ do
 
   if [ "$arg" == "-4" ] 
   then
-    test_badcas
+    test_badcas_certs
   fi
 
   if [ "$arg" == "-5" ]
@@ -252,7 +252,7 @@ do
 
   if [ "$arg" == "-99" ]
   then
-    test_uid; test_basicauth; test_useragent; test_badcas; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming;
+    test_uid; test_basicauth; test_useragent; test_badcas_certs; test_tor; test_exe; test_pdf; test_22scan; test_miscdns; test_filesharing; test_external_ip_lookup; test_url_shortener; test_gaming;
   fi
 
 done
