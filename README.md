@@ -60,6 +60,8 @@ In summary, the usage of `./tmNIDS -N`, where N is the number of the test, will 
 |   11    | External IP Address Lookup website | HTTP, DNS & TLS      |
 |   12    | URL Shortener | DNS      |
 |   13    | Policy Violation - Gaming | HTTP      |
+|   14    | Adware PUP | HTTP      |
+|   15    | Malware Command & Control Beacon | HTTP      |
 |   99    | CHAOS! Run all tests!                                             | ☝️ ALL         |
 
 ## Why? What about _insert_project\_here_?
