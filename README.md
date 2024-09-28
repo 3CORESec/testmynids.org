@@ -5,7 +5,7 @@ A website and framework for testing NIDS detection
 
 ## What is it?
 
-A simple project that aims to centralize testing for detection of malicious events by network intrusion detection systems (NIDS). The tests in this project are built against rulesets, not software. Therefor, if you're using ET Open, coverage for these tests will work.
+A simple project that aims to centralize testing for detection of malicious events by network intrusion detection systems (NIDS). The tests in this project are built against rulesets, not software. Therefore, if you're using ET Open, coverage for these tests will work.
 
 There are two parts to it:
 
