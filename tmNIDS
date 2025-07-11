@@ -72,6 +72,7 @@ test_tor () {
 
 test_exe () {
   curl -s http://testmynids.org/exe/calc.exe -o /tmp/calc.exe
+  rm /tmp/calc.exe
 }
 
 test_pdf () {
